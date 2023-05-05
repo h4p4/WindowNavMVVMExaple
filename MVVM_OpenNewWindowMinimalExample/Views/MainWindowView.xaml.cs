@@ -9,7 +9,6 @@ namespace MVVM_OpenNewWindowMinimalExample.Views {
 
         public MainWindowView() {
             InitializeComponent();
-
             ExitCommand = new DelegateCommand(_ => Close());
         }
     }
@@ -31,18 +30,14 @@ namespace MVVM_OpenNewWindowMinimalExample.Views {
             _canExecute = canExecute;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute == null ? true : _canExecute(parameter);
-        }
+        public bool CanExecute(object parameter) 
+            => _canExecute == null ? true : _canExecute(parameter);
 
-        public void Execute(object parameter)
-        {
-            _execute(parameter);
-        }
+        public void Execute(object parameter) 
+            => _execute(parameter);
 
-        public void RaiseCanExecuteChanged()
-          => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        public void RaiseCanExecuteChanged() 
+            => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
         event EventHandler ICommand.CanExecuteChanged
         {

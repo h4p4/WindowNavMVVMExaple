@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MVVM_OpenNewWindowMinimalExample.ViewModels {
 
-    class BasicViewModel {
+    public class BasicViewModel {
 
         protected bool SetProperty<T>(ref T field, T value, [CallerMemberName]string propertyName = null) {
             if (EqualityComparer<T>.Default.Equals(field, value))

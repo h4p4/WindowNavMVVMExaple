@@ -17,9 +17,7 @@ namespace MVVM_OpenNewWindowMinimalExample.ViewModels
             get
             {
                 if (_openChildWindow == null)
-                {
                     _openChildWindow = new OpenChildWindowCommand(this);
-                }
                 return _openChildWindow;
             }
         }
@@ -28,19 +26,17 @@ namespace MVVM_OpenNewWindowMinimalExample.ViewModels
             get
             {
                 if (_openDialogWindow == null)
-                {
                     _openDialogWindow = new OpenDialogWindowCommand(this);
-                }
                 return _openDialogWindow;
             }
         }
     }
 
-    abstract class MyCommand : ICommand
+    abstract class OpenWindowCommand : ICommand
     {
         protected MainWindowViewModel _mainWindowVeiwModel;
 
-        public MyCommand(MainWindowViewModel mainWindowVeiwModel)
+        public OpenWindowCommand(MainWindowViewModel mainWindowVeiwModel)
         {
             _mainWindowVeiwModel = mainWindowVeiwModel;
         }
@@ -52,37 +48,29 @@ namespace MVVM_OpenNewWindowMinimalExample.ViewModels
         public abstract void Execute(object parameter);
     }
 
-    class OpenChildWindowCommand : MyCommand
+    class OpenChildWindowCommand : OpenWindowCommand
     {
         public OpenChildWindowCommand(MainWindowViewModel mainWindowVeiwModel) : base(mainWindowVeiwModel)
         {
         }
-        public override bool CanExecute(object parameter)
-        {
-            return true;
-        }
+        public override bool CanExecute(object parameter) => true;
         public override void Execute(object parameter)
         {
-            var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
+            var displayRootRegistry = App.DisplayRootRegistry;
             var otherWindowViewModel = new OtherWindowViewModel();
             displayRootRegistry.ShowPresentation(otherWindowViewModel);
         }
     }
 
-    class OpenDialogWindowCommand : MyCommand
+    class OpenDialogWindowCommand : OpenWindowCommand
     {
         public OpenDialogWindowCommand(MainWindowViewModel mainWindowVeiwModel) : base(mainWindowVeiwModel)
         {
         }
-        public override bool CanExecute(object parameter)
-        {
-            return true;
-        }
+        public override bool CanExecute(object parameter) => true;
         public override async void Execute(object parameter)
         {
-            var displayRootRegistry = (Application.Current as App).displayRootRegistry;
-
+            var displayRootRegistry = App.DisplayRootRegistry;
             var dialogWindowViewModel = new DialogWindowViewModel();
             await displayRootRegistry.ShowModalPresentation(dialogWindowViewModel);
 

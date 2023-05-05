@@ -6,24 +6,21 @@ using System.Threading.Tasks;
 namespace MVVM_OpenNewWindowMinimalExample {
     public partial class App : Application {
 
-        public DisplayRootRegistry displayRootRegistry = new DisplayRootRegistry();
-        MainWindowViewModel mainWindowViewModel;
+        public static readonly DisplayRootRegistry<BasicViewModel> DisplayRootRegistry = new DisplayRootRegistry<BasicViewModel>();
+        private MainWindowViewModel _mainWindowViewModel;
 
         public App()
         {
-            displayRootRegistry.RegisterWindowType<MainWindowViewModel, MainWindowView>();
-            displayRootRegistry.RegisterWindowType<OtherWindowViewModel, ChildWindow>();
-            displayRootRegistry.RegisterWindowType<DialogWindowViewModel, DialogWindow>();
+            DisplayRootRegistry.RegisterWindowType<MainWindowViewModel, MainWindowView>();
+            DisplayRootRegistry.RegisterWindowType<OtherWindowViewModel, ChildWindow>();
+            DisplayRootRegistry.RegisterWindowType<DialogWindowViewModel, DialogWindow>();
         }
 
         protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
-            mainWindowViewModel = new MainWindowViewModel();
-
-            await displayRootRegistry.ShowModalPresentation(mainWindowViewModel);
-
+            _mainWindowViewModel = new MainWindowViewModel();
+            await DisplayRootRegistry.ShowModalPresentation(_mainWindowViewModel);
             Shutdown();
         }
     }

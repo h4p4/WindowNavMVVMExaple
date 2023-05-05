@@ -1,4 +1,4 @@
 ﻿namespace MVVM_OpenNewWindowMinimalExample.ViewModels {
-    class DialogWindowViewModel {
+    class DialogWindowViewModel : BasicViewModel {
     }
 }
